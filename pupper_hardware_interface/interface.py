@@ -1,5 +1,8 @@
 import serial
 import msgpack
+import cv2
+import imutils
+from imutils.video import VideoStream
 from pupper_hardware_interface import nonblocking_serial_reader
 from pupper_hardware_interface import robot_state
 
@@ -45,6 +48,7 @@ class Interface:
             self.serial_handle
         )
 
+        self.vs = VideoStream(usePiCamera=0).start()
         self.robot_state = robot_state.RobotState()
 
     def read_incoming_data(self):
@@ -155,3 +159,6 @@ class Interface:
         """
         cart_positions_list = cartesian_positions.flatten("F").tolist()
         self.send_dict({"cart_pos": cart_positions_list})
+
+    def get_image(self):
+        return cv2.flip(imutils.rotate(self.vs.read(), 180), 1)

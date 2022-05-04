@@ -10,6 +10,8 @@ setuptools.setup(
     install_requires=[
         "msgpack",
         "pyserial",
+        "imutils",
+        "opencv-python",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
